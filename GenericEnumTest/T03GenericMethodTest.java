@@ -23,7 +23,7 @@ class Util {
  * parameter <K> <V>
  */
 class Pair<K, V> {
-	private K key; //K = xkdlq
+	private K key; //K = 타입
 	private V value;
 	
 	public Pair(K key, V value) {
