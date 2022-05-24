@@ -23,7 +23,7 @@ class Util {
  * parameter <K> <V>
  */
 class Pair<K, V> {
-	private K key; //K = 타입
+	private K key; //K = xkdlq
 	private V value;
 	
 	public Pair(K key, V value) {
@@ -91,8 +91,10 @@ public class T03GenericMethodTest {
 			System.out.println("논리(의미)적으로 동일한 객체 아님.");
 		}
 		
-//		p1.displayAll("키", 100); //p1에 정해둔 타입은 <인티저,스트링>인데 타입이 안맞아서 에러나는 코드
+		p1.displayAll("키", 100); //아래와 동일함. 제너릭은 생략가능
 		p1.<String,Integer>displayAll("키", 100); //p1에 정해둔 타입은 <인티저,스트링>인데 타입이 안맞아서 에러나는 코드
+		//displayAll이 제너릭 메소드라서 지금 지정된 <인티저,스트링>타입과 매개변수 타입이 같으면 에러x
+		//만약 displayAll이 일반 메소드였다면 매개변수의 타입은 클래스에 선언된 <스트링, 인티저>타입을 따라야하기 때문에 에러O
 
 	}
 }
