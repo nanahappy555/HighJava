@@ -99,6 +99,7 @@ class Horse extends Thread implements Comparable<Horse> {
 
 	// 1~50까지 -를 출력한다. 10구간마다 위치를 >로 나타내고
 	// 속도는 0.01초부터 0.5초까지 랜덤으로 설정
+	// 말의 위치 출력하는 
 	@Override
 	public void run() {
 		System.out.print(getHName() + " ");
