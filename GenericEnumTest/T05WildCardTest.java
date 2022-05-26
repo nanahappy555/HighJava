@@ -20,7 +20,6 @@ public class T05WildCardTest {
 		
 		FruitBox<Fruit> fruitBox = new FruitBox<Fruit>();//과일상자
 		FruitBox<Apple> appleBox = new FruitBox<Apple>();//사과상자
-		FruitBox<Apple> appleBox = new FruitBox<Apple>();//사과상자
 		
 		fruitBox.add(new Apple());
 		fruitBox.add(new Grape());
