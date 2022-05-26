@@ -20,6 +20,7 @@ public class T05WildCardTest {
 		
 		FruitBox<Fruit> fruitBox = new FruitBox<Fruit>();//과일상자
 		FruitBox<Apple> appleBox = new FruitBox<Apple>();//사과상자
+		FruitBox<Apple> appleBox = new FruitBox<Apple>();//사과상자
 		
 		fruitBox.add(new Apple());
 		fruitBox.add(new Grape());
@@ -30,11 +31,11 @@ public class T05WildCardTest {
 		
 		Juicer.makeJuice(fruitBox);
 //	메서드를 <Fruit>로 선언했을 때
-//		static void makeJuice(FruitBox<Fruit> box) {  //Fruit만 넣을수 있음
-//		Juicer.makeJuice(appleBox); //Apple은 못넣어서 에러
-//	메서드를 <T>로 선언했을 때
-//		static <T> void makeJuice(FruitBox<Tt> box) {  //아무거나 모든 클래스 넣을 수 있음
-//		Juicer.makeJuice(appleBox); //Apple은 못넣어서 에러
+//		static void makeJuice(FruitBox<Fruit> box) {  //오직 Fruit만 넣을수 있음
+//		Juicer.makeJuice(appleBox); //appleBox는 <Fruit>타입이 아니라 에러
+//	메서드를 제너릭메서드<T>로 선언했을 때
+//		static <T> void makeJuice(FruitBox<Tt> box) {  ///매개변수의 <T>는 메소드의 <T>라서 모든 클래스 넣을 수 있음
+//		Juicer.makeJuice(appleBox); //모든타입가능해서 에러x
 
 	}
 }
@@ -54,7 +55,7 @@ class Juicer {
 		String fruitListStr = "";
 		
 		int cnt = 0;
-		for(Fruit f : box.getFruitList()) { //후르츠 리스트에 있는 과일객체를 f에 담아서 출력하려고
+		for(Fruit f : box.getFruitList()) { //box(후르츠 리스트)에 있는 과일객체를 f에 담아서 출력하려고
 			if(cnt == 0) { //후르츠 리스트에 있는 과일객체를 담은 f를 String타입에 순차적으로 담음(f, f, f형태의 텍스트 )
 				fruitListStr += f; //
 			} else {
@@ -88,24 +89,24 @@ class Fruit {
 	public String toString() {
 		return "과일 (name=" + name + ")";
 	}
-
 }
+
 
 class Apple extends Fruit {
 
 	public Apple() {
 		super("사과");
 	}
-
 }
+
 
 class Grape extends Fruit {
 
 	public Grape() {
 		super("포도");
 	}
-
 }
+
 
 class FruitBox<T> {
 	private List<T> fruitList;
@@ -121,6 +122,4 @@ class FruitBox<T> {
 	public void add(T fruit) {
 		fruitList.add(fruit);
 	}
-	
-	
 }
