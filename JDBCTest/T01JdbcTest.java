@@ -43,8 +43,9 @@ public class T01JdbcTest {
 		try {
 			//1. 드라이버 로딩 확인 (필수과정x)
 			Class.forName("oracle.jdbc.driver.OracleDriver");
+			//(리플렉션)
 			
-			//2. DB에 접속 (Connection 객체 생성)
+			//2. DB에 접속연결 (Connection 객체 생성)
 			String url = "jdbc:oracle:thin:@localhost:1521/xe";
 			String userId = "LHR91";
 			String password = "java";
@@ -59,7 +60,7 @@ public class T01JdbcTest {
 			//실행결과를 ResultSet객체에 저장한다.
 			String sql = "select * from lprod"; //실행할 쿼리문
 			
-			//SQL문이 select인 경우 executeQuery()메서드를 사용한다. (ResultSet 객체가 만들어진다)
+			//SQL문이 select인 경우 executeQuery()메서드를 사용한다. (데이터를 담은 ResultSet 객체가 만들어진다)
 			// 그외의 경우에는 executeUpdate()메서드를 사용한다. (int값 리턴)
 			rs = stmt.executeQuery(sql);
 			
@@ -74,8 +75,9 @@ public class T01JdbcTest {
 				//컬럼의 자료를 가져오는 방법
 				//방법1) rs.get자료형이름("컬럼명")
 				//방법2) rs.get자료형이름(컬럼번호) => 컬럼번호는 1부터 시작
-				System.out.println("lprod_id : " + rs.getInt("lprod_id"));
-				System.out.println("lprod_gu : " + rs.getString("lprod_gu"));
+				System.out.println("lprod_id : " + rs.getInt("lprod_id")); //Number
+//				System.out.println("lprod_gu : " + rs.getString("lprod_gu")); //VARCHAR
+				System.out.println("lprod_gu : " + rs.getString(2)); //lprod의 2번째 컬럼
 			}
 			System.out.println("출력 끝...");
 			
@@ -85,7 +87,7 @@ public class T01JdbcTest {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}finally {
-			//6. 종료 (사용했던 자원을 모두 반납한다.)
+			//6. **종료** (사용했던 자원을 모두 반납한다. 자원반납은 반드시해줘야됨.반드시 애야해서 finally에 씀)
 			if(rs != null) try {rs.close();} catch(SQLException ex) {}
 			if(stmt != null) try {stmt.close();} catch(SQLException ex) {}
 			if(conn != null) try {conn.close();} catch(SQLException ex) {}
