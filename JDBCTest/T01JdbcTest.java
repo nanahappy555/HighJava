@@ -50,10 +50,11 @@ public class T01JdbcTest {
 			String userId = "LHR91";
 			String password = "java";
 			
-			//커넥션 객체에 담아야 해서 아까 만들어둔 커넥션 객체(변수)에 담는다
+			//커넥션 객체에 담아야 해서 아까 만들어둔 커넥션 객체(변수)에 담는다 좌항=커넥션객체 리턴
 			conn = DriverManager.getConnection(url, userId, password);
 			
 			//3. Statement객체 생성 => Connection객체를 이용한다.
+			//prepared는 미리 준비해놓고 파라미터로 넣어줌
 			stmt = conn.createStatement();
 			
 			//4. SQL문을 Statement객체를 이용하여 실행하고 
@@ -62,7 +63,7 @@ public class T01JdbcTest {
 			
 			//SQL문이 select인 경우 executeQuery()메서드를 사용한다. (데이터를 담은 ResultSet 객체가 만들어진다)
 			// 그외의 경우에는 executeUpdate()메서드를 사용한다. (int값 리턴)
-			rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql); //쿼리날려..
 			
 			//5. ResultSet객체에 저장되어 있는 데이터를 반복문과
 			// 	 next()메서드를 이용하여 차례대로 읽어와 처리한다.
@@ -87,7 +88,7 @@ public class T01JdbcTest {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}finally {
-			//6. **종료** (사용했던 자원을 모두 반납한다. 자원반납은 반드시해줘야됨.반드시 애야해서 finally에 씀)
+			//6. **종료** (사용했던 자원을 모두 반납한다. 자원반납은 반드시해줘야됨.안하면 오라클에서 문제 생김. 반드시 해야해서 finally에 씀)
 			if(rs != null) try {rs.close();} catch(SQLException ex) {}
 			if(stmt != null) try {stmt.close();} catch(SQLException ex) {}
 			if(conn != null) try {conn.close();} catch(SQLException ex) {}
