@@ -72,8 +72,13 @@ public class T02FileTest {
 		//하위 디렉토리 정보를 저장할 ArrayList 생성(File배열의 인덱스값 저장)
 		List<Integer> subDirList = new ArrayList<Integer>();
 		
+		//헤더
+		System.out.println("생성 날짜 및 시간\t속성\t\t용량\t파일/폴더명");
+		System.out.println("-----------------------------------------------");
+		
 		//날짜를 출력하기 위한 형식 설정
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd a hh:mm");
+		////2022-06-04 오전오후 07:11
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd a hh:mm");
 		
 		for(int i=0; i<files.length; i++) {
 			String attr = ""; //파일의 속성(읽기, 쓰기, 히든, 디렉토리 구분)
@@ -81,11 +86,12 @@ public class T02FileTest {
 			
 			if(files[i].isDirectory()) {
 				attr = "<DIR>";
-				subDirList.add(i); //디렉토리가 맞으면 index를 List에 추가하기. length는 폴더갯수와 같다
+				subDirList.add(i); 
+				//디렉토리가 맞으면 index를 List에 추가하기. length는 폴더갯수와 같다
 			}else {
 				size = files[i].length() + "";
 				attr = files[i].canRead()? "R" : " "; //읽기 권한 여부 확인
-				attr += files[i].canWrite()? "W" : " ";// +=누적 쓰기 권한 여부 확인
+				attr += files[i].canWrite()? "W" : " ";// 누적/ 쓰기 권한 여부 확인
 				attr += files[i].isHidden()? "H" : " "; //숨김파일 여부 확인
 			}
 			System.out.printf("%s %5s %12s %s\n", 
@@ -96,6 +102,7 @@ public class T02FileTest {
 		
 		int dirCount = subDirList.size(); //폴더 안의 하위폴더 개수 구하기
 		int fileCount = files.length - dirCount; //폴더안의 파일개수구하기
+		//files.length는 하위폴더와 파일 개수 전부니까 폴더개수를 빼야 파일개수를 알 수 있다
 		
 		System.out.println(fileCount + "개의 파일, "
 				+ dirCount + "개의 디렉토리(폴더)");
@@ -103,7 +110,11 @@ public class T02FileTest {
 		System.out.println();
 		
 		for(Integer idx : subDirList) {
-			displayFileList(files[idx]); //재귀호출 ; 자기가 자신을 계속해서 호출하므로, 끝없이 반복
+			System.out.println("하위 폴더 정보");
+			System.out.println();
+			displayFileList(files[idx]); 
+			//재귀호출 ; 자기가 자신을 계속해서 호출하므로, 끝없이 반복
+			//subDirList에 저장된 하위 디렉토리 정보를 모두 출력할때까지 반복
 		}
 		
 	}
