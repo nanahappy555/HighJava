@@ -34,6 +34,8 @@ public class T03ByteArrayIOTest {
 		//read()메서드 => byte단위로 자료를 읽어와 int형으로 반환한다.
 		//				더 이상 읽어올 자료가 없으면 -1 반환되고 while문 종료
 		while((data = bais.read()) != -1) { //InputStream에는 read()가 있다... 1byte씩 읽어옴. byte기반이니까~
+			////-1이 될때까지=읽어올 자료가 없을때까지
+			//baos(바이트아웃풋스트림)에 data를 저장하기
 			baos.write(data); //출력하기. 아웃풋스트림에 저장되고 있음
 		}
 		
