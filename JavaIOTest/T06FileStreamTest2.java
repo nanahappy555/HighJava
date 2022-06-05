@@ -2,7 +2,9 @@ package kr.or.ddit.basic;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-
+/*
+  File Output
+*/
 public class T06FileStreamTest2 {
 	public static void main(String[] args) {
 		
