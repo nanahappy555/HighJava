@@ -70,8 +70,8 @@ public class FileCopy {
 //			FileOutputStream fos2 = new FileOutputStream(copyFile);
 //			BufferedOutputStream bos = new BufferedOutputStream(fos2, 10240);
 			BufferedOutputStream bos = new BufferedOutputStream(
-											new FileOutputStream(copyFile2),10240);
-												//10KB짜리 버퍼
+							new FileOutputStream(copyFile2),10240);
+							//10KB짜리 버퍼
 			
 			int fileSize2 = 0;
 			
