@@ -1,3 +1,4 @@
+package kr.or.ddit.basic.E06Hotel;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -13,33 +14,13 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-/*굳이 고객정보를 객체로 저장할 필요가 없음
- * -Hotel프로그램
- * 필드
- * 스캐너타입 참조변수
- * Map타입 참조변수
- * 
- * 생성자()
- * 스캐너
- * HashMap객체
- * 
- * 메소드
- * 메뉴출력
- * 프로그램 시작
- * 	
- * 체크인(insert)
- * 체크아웃(remove)
- * 객실상태(iterator? key값 불러와서 key값을 Set에 저장하고 get(keySet)메소드로 출력
-
- */
-
 public class Hotel {
 	public static void main(String[] args) {
 		new Hotel().startMenu();
 	}
 	private Scanner scan;
 	private Map<Integer, String> guestMap;
-	private String fileSrc = "c:/D_Other/guestMap.bin";
+	private String fileSrc = "d:/D_Other/guestMap.bin";
 	
 	public Hotel() {
 		scan = new Scanner(System.in);
@@ -59,8 +40,8 @@ public class Hotel {
 	public void startMenu() {
 		System.out.println("**************************");
 		System.out.println("호텔 문을 열었습니다.");
+		System.out.println();
 		open();
-		System.out.println("투숙객 정보를 불러옵니다...");
 		System.out.println("**************************");
 		
 		
@@ -83,7 +64,8 @@ public class Hotel {
 			case 4:
 				close();
 				System.out.println("**************************");
-				System.out.println("투숙객 정보를 저장했습니다...");
+				System.out.print("투숙객 정보를 저장했습니다...");
+				System.out.println();
 				System.out.println("호텔 문을 닫았습니다.");
 				System.out.println("**************************");
 				return;
@@ -100,11 +82,20 @@ public class Hotel {
 private void open() {
 	try {
 		ObjectInputStream ois;
+		
+		File file = new File(fileSrc);
+		if(!(file.isFile())) {
+		file.createNewFile();
+		System.out.println("투숙객 정보 파일을 생성했습니다.");
+	}
+		
 		ois = new ObjectInputStream(
 				new BufferedInputStream(
 						new FileInputStream(fileSrc)));
 		
 		Object obj;
+		
+		System.out.println("투숙객 정보를 불러옵니다...");
 		
 		while((obj = ois.readObject()) != null) {
 			guestMap = (Map<Integer, String>)obj; //불러온 정보를 Map에 저장
@@ -112,7 +103,8 @@ private void open() {
 		ois.close();
 		
 	}catch(IOException e) {
-		e.printStackTrace();
+//		e.printStackTrace();
+		//readObject()가 파일 다 읽고나면 EndOfFileException 예외가 발생하므로 안보여주려면 주석처리하면 됨
 	} catch (ClassNotFoundException e) {
 		e.printStackTrace();
 	}
@@ -124,11 +116,11 @@ private void open() {
 private void close() {
 	try {
 		ObjectOutputStream oos;
-		File file = new File(fileSrc);
-		if(!(file.isFile())) {
-			file.createNewFile();
-			System.out.println("투숙객 정보 파일을 생성했습니다.");
-		}
+//		File file = new File(fileSrc);
+//		if(!(file.isFile())) {
+//			file.createNewFile();
+//			System.out.println("투숙객 정보 파일을 생성했습니다.");
+//		}
 		
 		oos = new ObjectOutputStream(
 				new BufferedOutputStream(
