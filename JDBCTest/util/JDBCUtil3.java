@@ -1,26 +1,40 @@
 package kr.or.ddit.util;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
+import java.util.ResourceBundle;
 
-public class JDBCUtil {
+/**
+ * db.properties파일의 내용으로 DB정보를 설정하는 방법
+ * 방법2) ResourceBundle 객체 이용하기
+ * @author PC-17
+ *
+ */
+public class JDBCUtil3 {
+	static ResourceBundle bundle; //Properties객체변수 선언
 	
-	//실행될때 한번만 하면 됨
-	//JDBCUtil이 메모리에 로딩될 때 한번만 실행됨
 	static {
 		
-		//1. 드라이버 로딩 확인 (필수과정x)
+		// 1. 드라이버 로딩 확인 (필수과정x)
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-//			System.out.println("드라이버 로딩 완료");
-		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 로딩 실패..."); //굳이 없어도 되는 부분
+			bundle = ResourceBundle.getBundle("db");
+			
+			Class.forName(bundle.getString("driver")); //oracle.jdbc.driver.OracleDriver
+
+			//System.out.println("드라이버 로딩 완료");
+		}catch(ClassNotFoundException e) {
+			System.out.println("드라이버 로딩 실패..."); // 굳이 없어도 되는 부분
 			e.printStackTrace();
 		}
+		
 	}
 	
 	
@@ -32,9 +46,9 @@ public class JDBCUtil {
 	
 		try {//url,userId,password
 			return DriverManager.getConnection(
-					"jdbc:oracle:thin:@localhost:1521/xe", 
-					"LHR91", 
-					"java");
+					bundle.getString("url"), 
+					bundle.getString("user"), 
+					bundle.getString("password"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
