@@ -3,7 +3,6 @@ package kr.or.ddit.basic;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
 public class T07ResourceBundleTest {
 /*
 	ResourceBundle 객체 => 확장자가 properties인 파일 정보를 읽어와 key값과 value값을 분리한 정보를 갖는 객체

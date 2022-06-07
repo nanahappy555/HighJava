@@ -28,7 +28,7 @@ public class T06PropertiesTest {
 			
 			while(keys.hasMoreElements()) {
 				String key = keys.nextElement();
-				String value = prop.getProperty(key);
+				String value = prop.getProperty(key); //key에 해당되는 속성값value 가져옴
 				System.out.println(key + " => " + value);
 				
 			}
