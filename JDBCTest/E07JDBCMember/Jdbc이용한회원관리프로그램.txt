@@ -1,0 +1,28 @@
+
+	회원을 관리하는 프로그램을 작성하는데 
+	아래의 메뉴를 모두 구현하시오. (CRUD기능 구현하기)
+	(DB의 MYMEMBER테이블을 이용하여 작업한다.)
+	
+	* 자료 삭제는 회원ID를 입력 받아서 삭제한다.
+	
+	예시메뉴)
+	----------------------
+		== 작업 선택 ==
+		1. 자료 입력			---> insert
+		2. 자료 삭제			---> delete
+		3. 자료 수정			---> update
+		4. 전체 자료 출력		---> select
+		5. 작업 끝.
+
+	----------------------
+
+	   
+/* 회원관리 프로그램 테이블 생성 스크립트 */
+create table mymember(
+    mem_id varchar2(8) not null,  -- 회원ID
+    mem_name varchar2(100) not null, -- 이름
+    mem_tel varchar2(50) not null, -- 전화번호
+    mem_addr varchar2(128)    -- 주소
+);
+
+
