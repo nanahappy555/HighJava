@@ -90,7 +90,7 @@ public class FileCopy {
 			long runTime2 = endTime2 - startTime2;
 			
 			System.out.println("버퍼 복사 완료");
-			System.out.println("소요 시간 : " + runTime2/1000 + "초"); //24초 걸렸음
+			System.out.println("소요 시간 : " + runTime2/1000 + "초"); //15초 걸렸음
 			
 			bos.flush(); //작업 종료 전 버퍼에 남은 데이터 모두 출력
 			bos.close();
