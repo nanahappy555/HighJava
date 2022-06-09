@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  <!--!DOCTYPE configuration 뜻 : 이 DOC은 <configuration>으로 감싸져야된다는 뜻 -->
+<configuration>
+<properties resource="db.properties" />
+
+	<settings>
+		<!-- DB 컬럼명을 낙타표기법으로 속성명과 자동 매핑하도록 설정하기(value="true"면 기능 on) 
+			member.xml에 매번 resultMap 설정해줄 필요가 없다-->
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+
+	<typeAliases>
+		<typeAlias type="kr.or.ddit.member.vo.MemberVO" alias="memVO"/>
+	</typeAliases>
+
+<environments default="development"> <!-- default값은 development -->
+	<environment id="development"> 
+		<transactionManager type="JDBC" /> <!-- 마지막 슬래시로 닫아버림 -->
+		<dataSource type="POOLED"> <!-- 커넥션을 어떤 방식으로 사용할 것인지. 커넥션풀 -->
+			<property name="driver" value="${driver}"/> <!-- ${driver} : db.properties파일 안에 속성 이름이 driver인 값을 찾아서 가져옴 -->
+			<property name="url" value="${url}"/>
+			<property name="username" value="${user}"/> 
+			<property name="password" value="${password}"/> 
+		</dataSource>
+	</environment>
+	
+<!-- <environment id="real"> -->
+	
+<!-- </environment> -->
+</environments>
+
+<mappers>
+	<mapper resource="kr/or/ddit/basic/memberTest.xml" /> <!-- bin을 기준으로... -->
+	<mapper resource="mapper/member.xml" /> <!-- bin을 기준으로... -->
+</mappers>
+
+</configuration>
