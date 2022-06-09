@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+	<!-- 쿼리는 여기에 -->
+	<!-- 
+	
+		이 영역에 SQL문에 맞는 태그를 사용하여 SQL문을 기술한다.
+		
+		사용할 수 있는 기본적인 태그들
+		<select> ~~~ </select>
+		<insert> ~~~ </insert>
+		<update> ~~~ </update>
+		<delete> ~~~ </delete>
+		
+		위 태그에서 사용되는 속성들
+		
+		1) id속성 : 해당 태그를 호출할 때 <mapper>태그의 namespace 속성과 연결하여 사용하는 이름
+		
+		2) parameterType 속성 : sql문에 사용될 데이터가 들어있는 객체를 지정함. 
+				(보통 VO클래스, 자바의 자료형이름 등이 사용된다. 생략가능)
+				
+		3) resultType 속성 : select문을 실행한 결과를 담은 객체타입을 지정함.
+				(보통 VO클래스, 자바의 자료형이름 등이 사용된다.)
+				
+		4) resultMap 속성 : 결과 레코드 컬럼명과 VO객체의 property명이 다를 경우 적절한 매핑을 위해 사용된다.
+		
+		
+	
+	 -->
+	<insert id="insertMember" parameterType="kr.or.ddit.member.vo.MemberVO">
+		INSERT INTO mymember( mem_id, mem_name, mem_tel, mem_addr, reg_dt ) 
+		VALUES ( #{memId}, #{memName}, #{memTel}, #{memAddr}, sysdate )
+	</insert>
+	
+	<update id="updateMember" parameterType="kr.or.ddit.member.vo.MemberVO">
+		 update mymember 
+			set mem_name= #{memName}, 
+			    mem_tel= #{memTel}, 
+				mem_addr= #{memAddr} 
+		  where mem_id = #{memId} 
+	</update>
+	
+	<delete id="deleteMember" parameterType="String">
+		delete from mymember where mem_id = #{아이디} <!-- String값 하나만 받기 때문에 #{}안에 들어가는 속성 이름은 의미가 없다 -->
+	
+	</delete>
+	
+	<select id="getMemberAll" resultType="kr.or.ddit.member.vo.MemberVO">
+	<!-- 
+		1.select * 또는 2.SQL 컬럼명만 썼을 때는 NullPointerException이 발생했다.
+		2의 경우 컬럼명을 이용해서 mv.setMem_id("") 세팅하려고 함
+		=>실패해서 모든 필드가 초기값(null)만 설정된 객체가 됨
+		=>foreach문으로 가져오려고 할 때 값이 null이니 NullPointerException이 발생하게 됨.
+		
+		=> 컬럼이름 as MemberVO의 필드이름(memId)로 SQL문을 써줘야됨
+	 -->
+<!-- 		select mem_id as memId, -->
+<!-- 			   mem_name as memName, -->
+<!-- 			   mem_tel as memTel, -->
+<!-- 			   mem_addr as memAddr -->
+<!-- 		  from mymember -->
+<!-- mybatis_config에서 camelCase를 true로 만들어줘서 as컬럼명을 안써도 알아서 memId 형태로 찾아줌 -->
+		select mem_id,
+			   mem_name,
+			   mem_tel,
+			   mem_addr
+		  from mymember
+	</select>
+	
+	<resultMap type="kr.or.ddit.member.vo.MemberVO" id="memMap">
+		<!-- 참고할 매핑정보 알려줌 -->
+		<result column="mem_id" property="memId"/> 
+		<result column="mem_name" property="memName"/> 
+		<result column="mem_tel" property="memTel"/> 
+		<result column="mem_addr" property="memAddr"/> 
+	</resultMap>
+	
+	<select id="getMemberAll2" resultMap="memMap">
+	<!-- 
+	 -->
+		select mem_id,
+			   mem_name,
+			   mem_tel,
+			   mem_addr
+		  from mymember
+	</select>
+	
+	<select id="getMember" resultType="kr.or.ddit.member.vo.MemberVO">
+		select mem_id,
+			   mem_name,
+			   mem_tel,
+			   mem_addr
+		  from mymember
+		 where mem_id = #{memId}
+	</select>
+	
+	<select id="checkMember" parameterType="String" resultType="int">
+	
+		select count(*) as cnt 
+		  from mymember
+		 where mem_id = #{memID}
+	</select>
+	
+	<select id="searchMember" resultType="memVO"> <!-- config파일에 이름 설정해둠 -->
+		select * 
+		  from mymember 
+		 where 1=1 
+		 <if test="memId != null and memId != ''">
+		   and mem_id = #{memId}
+		 </if>
+		 <if test="memName != null and memName != ''">
+		   and mem_name = #{memName}
+		 </if>
+		 <if test="memTel != null and memTel != ''">
+		   and mem_tel = #{memTel} 
+		 </if>  
+		 <if test="memAddr != null and memAddr != ''">
+		   and mem_addr like '%' || #{memAddr} || '%' 
+		 </if>
+	</select>
+</mapper>
