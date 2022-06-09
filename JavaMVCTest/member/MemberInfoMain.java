@@ -132,15 +132,15 @@ public class MemberInfoMain {
 		System.out.print("회원 주소 >> ");
 		String memAddr = scan.nextLine().trim();
 		
-		MemberVO mv = new MemberVO();
+		MemberVO mv = new MemberVO(); //입력한 값을 셋팅
 		mv.setMemId(memId);
 		mv.setMemName(memName);
 		mv.setMemTel(memTel);
-		mv.setMemAddr(memAddr);
+		mv.setMemAddr(memAddr); //'대전'만 검색하면 '대전'만 저장됨
 		
 		//검색기능 호출
 		//키워드로 검색하면 결과가 여러건이 나올 수 있으니까 List로 받음
-		List<MemberVO> memList = new ArrayList<MemberVO>();
+		List<MemberVO> memList = memService.searchMember(mv); //dao에서 sql실행한 결과가 담김
 		
 		System.out.println("---------------------------------------------");
 		System.out.println(" ID\t이 름\t전화번호\t\t주  소");
@@ -152,7 +152,7 @@ public class MemberInfoMain {
 		}else {
 			for(MemberVO mv2 : memList) {
 				System.out.println(mv2.getMemId() + "\t" + mv2.getMemName() + "\t"
-						+ mv2.getMemTel() + "\t\t" + mv.getMemAddr());
+						+ mv2.getMemTel() + "\t\t" + mv2.getMemAddr());
 			}
 		}
 		System.out.println("---------------------------------------------");
