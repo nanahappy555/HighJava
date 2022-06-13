@@ -69,7 +69,7 @@ class TargetThread extends Thread {
 	public void run() {
 		for(long i=1; i<=1000000000L; i++) {} // 시간 지연용
 		try {
-			Thread.sleep(1500); //타임웨이팅
+			Thread.sleep(1500); //타임웨이팅 1.5sec
 		}catch(InterruptedException ex) {
 			ex.printStackTrace();
 		}
