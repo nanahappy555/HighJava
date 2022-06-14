@@ -4,7 +4,7 @@ public class T09ThreadDaemonTest {
 	public static void main(String[] args) {
 		Thread th = new AutoSaveThread();
 		
-		// 데몬스레드로 설정하기( start메서드 호출전에 설정한다.)
+		// 데몬스레드로 설정하기( start메서드 호출 전에 설정한다.)
 		th.setDaemon(true); //default가 false라서 true로 바꿔야 실행됨
 		
 		th.start();
