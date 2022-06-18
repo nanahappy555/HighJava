@@ -1,4 +1,4 @@
-package mybatisboard;
+package mybatisboard.vo;
 
 public class BoardVO {
 	private int bNo;
@@ -43,7 +43,5 @@ public class BoardVO {
 	public void setbEndDate(String bEndDate) {
 		this.bEndDate = bEndDate;
 	}
-	
-	
-	
+
 }
