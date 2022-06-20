@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board1">
+	<!-- 쿼리 -->
+
+	<!-- 전체 글 출력 -->
+	<select id="getPostAll" resultType="bVO">
+		select * from jdbc_board
+	</select>
+
+	<!-- 검색한 글 출력 다이나믹 쿼리 -->
+	<select id="searchPost" resultType="bVO">
+		select *
+		  from jdbc_board
+		 where 1=1
+		<if test="bNo != null and bNo != ''">
+			and board_no = ${bNo}
+		</if>
+		<if test="bTitle != null and bTitle != ''">
+			and board_title like '%' || ${bTitle} || '%'
+		</if>
+		<if test="bWriter != null and bWriter != ''">
+			and board_writer like '%' || ${bWriter} || '%'
+		</if>
+		<if test="bContent != null and bContent != ''">
+			and board_content like '%' || ${bcontent} || '%'
+		</if>
+		<if test="bDate != null and bDate != ''">
+			and board_Date between to_date(${bDate})
+		</if>
+		<if test="bEndDate != null and bEndDate != ''">
+			and to_date(${bDate})
+		</if>
+		<if test="bEndDate == null or bEndDate == ''">
+			and sysdate
+		</if>
+	</select>
+
+	<!-- 새 글 추가 -->
+	<insert id="">
+		update jdbc_board
+		   set board_title = ${bTitle}
+		       board_writer = ${bWriter}
+		       board_conten = ${bContent}
+		       board_title = ${bTitle}
+		 where board_no = ${bNo}
+	</insert>
+
+	<!-- 글 수정 -->
+	<update id="">
+
+	</update>
+
+	<!-- 글 삭제 -->
+	<delete id="">
+
+	</delete>
+
+</mapper>
