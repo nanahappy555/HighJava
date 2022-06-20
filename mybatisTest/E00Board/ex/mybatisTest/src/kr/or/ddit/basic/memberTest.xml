@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memberTest">
+	
+	<!-- 이 영역에 SQL문에 맞는 태그를 사용하여 SQL문을 기술한다.
+	     
+	     사용할 수 있는 기본적인 태그들 
+	     <select> ~~~ </select>  
+	     <insert> ~~~ </insert>  
+	     <update> ~~~ </update>  
+	     <delete> ~~~ </delete>
+	     
+	     위 태그에서 사용되는 속성들
+	     
+	     1) id 속성 : 해당 태그를 호출할 때 <mapper> 태그의 namespace 속성과
+	                  연결하여 사용하는 이름
+	                 
+	     2) parameterType 속성 : sql문에 사용될 데이터가 들어있는 객체를 지정한다.
+	                             (보통 VO클래스, 자바의 자료형이름 등이 사용된다. 생략가능.)
+	                            
+	     3) resultType 속성 : select문을 실행한 결과를 담은 객체 타입을 지정함.
+	                          (보통 VO클래스, 자바의 자료형이름 등이 사용된다.)
+	                          
+	     4) resultMap 속성 : 결과 레코드 컬럼명과 VO객체의 property명이 다를 경우
+	                         적절한 매핑을 위해 사용된다.      
+	-->
+	
+	<insert id="insertMember" parameterType="kr.or.ddit.member.vo.MemberVO">
+		INSERT INTO mymember (mem_id, mem_name, mem_tel, mem_addr, reg_dt) 
+				      VALUES (#{memId}, #{memName}, #{memTel}, #{memAddr}, sysdate)
+	</insert>
+	
+	<update id="updateMember" parameterType="kr.or.ddit.member.vo.MemberVO">
+	
+		update mymember 
+		   set mem_name = #{memName}, 
+		        mem_tel = #{memTel},  
+				mem_addr = #{memAddr} 
+		 where mem_id = #{memId}
+	
+	</update>
+	
+	<delete id="deleteMember" parameterType="String">
+		delete from mymember
+		 where mem_id = #{memId} 
+	</delete>
+	
+	<select id="getMemberAll" resultType="kr.or.ddit.member.vo.MemberVO">
+		select mem_id as memId,
+		       mem_name as memName,
+		       mem_tel as memTel,
+		       mem_addr as memAddr 
+		  from mymember
+	</select>
+	
+	<resultMap type="kr.or.ddit.member.vo.MemberVO" id="memMap">
+		<result column="mem_id" property="memId"/>
+		<result column="mem_name" property="memName"/>
+		<result column="mem_tel" property="memTel"/>
+		<result column="mem_addr" property="memAddr"/>
+	</resultMap>
+	<select id="getMemberAll2" resultType="kr.or.ddit.member.vo.MemberVO">
+		select * from mymember
+	</select>
+	
+	<select id="getMember" resultType="kr.or.ddit.member.vo.MemberVO">
+	
+		select * from mymember
+		 where mem_id = #{memId}
+	
+	</select>
+	
+</mapper>
+

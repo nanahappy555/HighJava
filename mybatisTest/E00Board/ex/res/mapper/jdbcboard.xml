@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jdbcboard">
+
+	
+	
+	<resultMap type="homework.BoardVO" id="boardMap">
+		<result column="board_no" property="boardNo"/>
+		<result column="board_title" property="boardTitle"/>
+		<result column="board_content" property="boardContent"/>
+		<result column="board_writer" property="boardWriter"/>
+		<result column="board_date" property="boardDate"/>
+	</resultMap>
+	
+		<select id="checkBoard" resultType="int">
+	
+		select count(*) as cnt
+		  from jdbc_board where board_writer = #{boardWriter}
+		
+	</select>
+	
+	<select id="searchBoard" resultType="boardVO">
+	
+		select * from jdbc_board where 1=1
+		 <if test="boardWriter != null and boardWriter != ''">
+		   and board_writer = #{boardWriter}
+		 </if>
+		 <if test="boardTitle != null and boardTitle != ''">
+		   and board_title like '%' || #{boardTitle} || '%' 
+		 </if>
+		 <if test="boardContent != null and boardContent != ''">
+		   and board_content like '%' || #{boardContent} || '%'
+		 </if>
+		 <if test="boardDate != null and boardDate != ''">
+		   and board_date between to_date(#{boardDate})
+		 </if>
+		 <if test="bEndDate != null and bEndDate != ''">
+		   and to_date(#{bEndDate})
+		 </if>
+		 <if test="bEndDate == null and bEndDate == ''">
+		   and sysdate
+		 </if>
+	
+	</select>
+	
+	<select id="getAllBoardList" resultType="boardVO">
+	
+		select * from jdbc_board
+	
+	</select>
+	
+	<insert id="insertBoard" parameterType="String">
+	
+		INSERT INTO JDBC_BOARD (board_no, board_title, board_writer, board_date, board_content)
+		      VALUES(board_seq.nextVal, #{boardTitle}, #{boardWriter}, sysdate, #{boardContent}) 
+	
+	</insert>
+
+	<update id="updateBoard" parameterType="homework.BoardVO">
+	
+		update jdbc_board 
+		   set board_title = #{boardTitle}, 
+		       board_content = #{boardContent}
+		 where board_writer = #{boardWriter} 
+		
+	</update>
+
+	<delete id="deleteBoard" parameterType="int">
+	
+		delete from jdbc_board where board_no = #{boardNo}
+	
+	</delete>
+
+</mapper>
