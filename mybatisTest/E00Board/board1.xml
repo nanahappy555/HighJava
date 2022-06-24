@@ -4,7 +4,7 @@
 	<!-- 쿼리 -->
 
 	<!-- 전체 글 출력 -->
-	<select id="getPostAll" resultType="bVO">
+	<select id="getPostAll" resultMap="boardMap">
 		select * from jdbc_board
 	</select>
 
