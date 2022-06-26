@@ -1,5 +1,8 @@
 package mybatisboard.vo;
 
+/**
+* VO class
+*/
 public class BoardVO {
 	private int bNo;
 	private String bTitle;
