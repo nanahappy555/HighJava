@@ -1,8 +1,5 @@
-package mybatisboard.vo;
+package E00Board.vo;
 
-/**
-* VO class
-*/
 public class BoardVO {
 	private int bNo;
 	private String bTitle;
@@ -10,6 +7,8 @@ public class BoardVO {
 	private String bContent;
 	private String bDate;
 	private String bEndDate; //검색
+	
+	
 	public int getbNo() {
 		return bNo;
 	}
@@ -45,6 +44,11 @@ public class BoardVO {
 	}
 	public void setbEndDate(String bEndDate) {
 		this.bEndDate = bEndDate;
+	}
+	@Override
+	public String toString() {
+		return "BoardVO [bNo=" + bNo + ", bTitle=" + bTitle + ", bWriter=" + bWriter + ", bContent=" + bContent
+				+ ", bDate=" + bDate + ", bEndDate=" + bEndDate + "]";
 	}
 
 }
